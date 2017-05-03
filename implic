@@ -1,0 +1,6 @@
+c***********************************************************************
+c     if the size of ints or reals are changed, make sure to change the
+c     ndbbyt and ninbyt parameters in qpar.
+c***********************************************************************
+      implicit integer*4 (i-n)
+      implicit real*8 (a-h,o-z)

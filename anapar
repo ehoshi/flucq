@@ -1,0 +1,7 @@
+      parameter (mbatch = 2000)
+      parameter (mdatfl = 30)
+      parameter (maxcbn = 100)
+      parameter (tcmax = 200000.0d0)
+      parameter (maxwin = 100)
+      parameter (mdatpt = 1e6)
+

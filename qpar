@@ -1,0 +1,165 @@
+c***********************************************************************
+c     These are all of the parameters needed in the qdyn routines, but
+c     not in the coulomb integral calculation routines - those are in
+c     pspar.
+c***********************************************************************
+c I/O unit numbers.  tmp units are used only locally.
+c$$$      parameter (iuin   = 5)
+c$$$      parameter (iuout  = 6)
+c$$$      parameter (iutmp  = 7)
+      parameter (iudyn  = 9)
+c$$$      parameter (iudip  = 10)
+c$$$      parameter (iutmp2 = 70)
+c$$$      parameter (iutmp3 = 71)
+c I/O versions of the program, for cbn, sysdip, eor, bins, qdyn.in/simdat,
+c models.dat, and dyn.dat files.  change every time the I/O file becomes
+c incompatible with previous versions
+      parameter (iocbnv = 4)
+      parameter (iodipv = 1)
+      parameter (iosysv = 2)
+      parameter (iobinv = 1)
+      parameter (iosimv = 14)
+      parameter (iomodv = 5)
+      parameter (iodynv = 1)
+c If the interatomic separation is longer that this, look up a J()
+c value, otherwise use 1/r.  Caution - when this is changed, all of
+c the J****.dat files be recalculated.
+      parameter (dlimr = 10.00d0)
+c Na = Avogadro's number
+      real*8 Na
+      parameter (Na = 6.02252d23)
+c Various conversions:
+      parameter (fH2eV  = 27.212d0)
+      parameter (feV2J  = 1.6021773d-19)
+      parameter (fC2e   = 1.0d0 / feV2J)
+      parameter (fm2A   = 1.0d10)
+      parameter (fA2cm  = 1.0d-8)
+      parameter (fbhr2A = 0.529177249d0)
+      parameter (fA2bhr = 1.0d0 / fbhr2A)
+      parameter (fJ2kcl = 0.238846d0 / 1000.0d0)
+      parameter (fmdy2N = 1.0d-8)
+      parameter (fs2smd = 1.0d16)
+      parameter (fJ2Jmd = 1000.0d0 * Na * fm2A * fm2A / fs2smd / fs2smd)
+      parameter (fJmd2J = 1.0d0 / fJ2Jmd)
+      parameter (fH2Jmd = fH2eV * feV2J * fJ2Jmd)
+      parameter (feV2Jm = feV2J * fJ2Jmd)
+      parameter (fJm2eV = 1.0d0 / feV2Jm)
+      parameter (fJm2kc = 1.0d0 / fJ2Jmd * fJ2kcl * Na)
+      parameter (fkc2Jm = 1.0d0 / fJm2kc)
+      parameter (fkJ2Jm = 1000.0d0 / Na * fJ2Jmd)
+      parameter (fN2Nmd = 1000.0d0 * Na * fm2A / fs2smd / fs2smd)
+      parameter (fV2Vmd = fJ2Jmd / fC2e)
+      parameter (fE2Emd = fV2Vmd / fm2A)
+      parameter (fq2Jmd = 0.0013894625d0)
+      parameter (feA2D  = 4.8033d0)
+      parameter (fD2eA  = 1.0d0 / feA2D)
+      parameter (fpa2at = 1.0d0 / 1.01325d5)
+      parameter (fpmd2a = fs2smd * fs2smd * fm2A / 1000.0d0 / Na *
+     $     fpa2at)
+      parameter (fEm2Ek = fs2smd * fs2smd / fm2A / fm2A / 1000.d0 *
+     $     fJ2kcl)
+c physical constants:
+      real*8 k
+      parameter (k      = 1.380658d-23 * fJ2Jmd)
+      parameter (rkinv  = 1.0d0 / k)
+      parameter (c      = 299792458.d0 * fm2A / fs2smd)
+      parameter (rmub4p = 1d-7 * 1000.d0 * Na * fm2A / fC2e / fC2e)
+      parameter (pi4eps = 1.d0 / rmub4p / c / c)
+      parameter (epsinv = 1.d0 / pi4eps)
+c Maximum number of atoms, molecules, atoms per molecule, and bonds per
+c molecule allowed:
+      parameter (mxatml = 4)
+      parameter (maxmol = 500)
+      parameter (maxatm = maxmol * mxatml)
+      parameter (mxbdml = 3)
+c Maximum numbers of atom ids, atom types, molecule ids, and molecule types
+c allowed:
+      parameter (maxaid = 56)
+      parameter (maxaty = 5)
+      parameter (maxmid = 18)
+      parameter (maxmty = 2)
+c Maximum number of frame and tag atoms per atom:
+      parameter (mxfrat = 4)
+      parameter (mxtgat = mxatml - 2)
+c Maximum number of constraints per molecule:
+      parameter (maxcon = 6)
+c Maximum number of vectors to use in Ewald sums:
+      parameter (maxkvc = 514)
+      parameter (maxk1d = 15)
+c Maximum number of bins to count in binning stats:
+      parameter (maxbin = 1600)
+c Maximum number of bins in r for r-dependent binning stats:
+      parameter (mxrdiv = 20)
+c Maximum number of bins to use in binning erfc:
+      parameter (maxerb = 10000)
+c Maximum number of unformatted numbers to spit out at once.  This should
+c be the greater of 8 * maxatm + 11 or maxbin (or maxbin * mxrdiv if doing
+c r-dependent binning):
+      parameter (maxdat = 8 * maxatm + 8)
+c      parameter (maxdat = maxbin)
+c Maximum size of a data file
+      parameter (maxsiz = 1000 * 2 ** 20)
+c Maximum number of data records to write (no smaller than maxsiz / 
+c maxdat / nspbyt)
+      parameter (maxrec = 50000)
+c The number of bins in the J() grid
+      parameter (numbin = 400)
+c The number of bins in the g(r) statistical inefficiency array
+      parameter (mxgsib = 50)
+c Water model parameters
+      parameter (qOSPC = -0.82d0)
+      parameter (qHSPC = 0.41d0)
+      parameter (qOHSPC = qOSPC * qHSPC)
+      parameter (qHHSPC = qHSPC * qHSPC)
+      parameter (qOTP4 = 0.0d0)
+      parameter (qMTP4 = -1.04d0)
+      parameter (qHTP4 = 0.52d0)
+      parameter (qOHTP4 = qOTP4 * qHTP4)
+      parameter (qHHTP4 = qHTP4 * qHTP4)
+      parameter (qORER = -0.92d0)
+      parameter (qHRER = 0.46d0)
+      parameter (qOHRER = qORER * qHRER)
+      parameter (qHHRER = qHRER * qHRER)
+      parameter (qHbc = 0.65d0)
+      parameter (qObc = -0.65d0)
+c flexible water params, from Toukan and Rahman (PRB 31, 2643 '85)
+      parameter (crOH2 = 9.331d0 * fmdy2N * fN2Nmd)
+      parameter (crHH2 = 2.283d0 * fmdy2N * fN2Nmd)
+      parameter (crOHHH = -1.469d0 * fmdy2N * fN2Nmd)
+      parameter (crOHOH = 0.776d0 * fmdy2N * fN2Nmd)
+c How well the energies have to be conserved:
+      parameter (qetol = 1.0d0)
+c Values assigned to various different 'known' molecules:
+      parameter (idspc = 1)
+      parameter (idtp4 = 2)
+      parameter (idrer = 3)
+      parameter (idqsp = 4)
+      parameter (idqt4 = 5)
+      parameter (idqbc = 6)
+      parameter (idcl1 = 7)
+      parameter (idcld = 8)
+c Deviation from fixed bond length allowed in RATTLE:
+      parameter (rattol = 1.0d-8)
+c Coulomb-type interactions:
+      parameter (i1byr  = 1)
+      parameter (Jreg   = 2)
+      parameter (Jisol  = 4)
+c cutoffs for rms Drude and charge changes on resolving:
+      parameter (drmsct = 0.00001)
+      parameter (qrmsct = 0.000001)
+c number of RESPA distance and mass splits, with corresponding labels
+      parameter (ndist  = 2)
+      parameter (inear  = 1)
+      parameter (ifar   = 2)
+      parameter (nmass  = 3)
+      parameter (ilight = 1)
+      parameter (imixed = 2)
+      parameter (iheavy = 3)
+c number of bins and upper integration limit for J(r) integrals
+      parameter (njk = 400)
+      parameter (rjkmax = 80.d0)
+c maximum number of custom J interactions
+      parameter (mxcstj = maxmty * (maxmty + 1) / 2)
+c solvation energy hack
+      parameter (nbde = 30)
+      parameter (nrclbn = 200)

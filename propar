@@ -1,0 +1,15 @@
+      parameter (ioeopv = 8)
+      parameter (maxcbn = 100)
+      parameter (mxnbr = 11)
+      parameter (maxtbn = 200)
+      parameter (mbatch = 1000)
+      parameter (mdatfl = 30)
+      parameter (tcmax = 200000.0d0)
+      parameter (nangbn = 180)
+c
+c      parameter (maxtim = 1000000)
+c    change to 5X so that props can run after longer time
+c    should use approx 120MB for 4 arrays
+c    EM 10/16/18
+      parameter (maxtim = 4000000)
+      parameter (maxbas = 1000)

@@ -1,0 +1,179 @@
+      common/atoms/amass(maxaid), aminv(maxaid)
+      logical neede, hasbdt, hasdrd, hashvy, hasljt, haslt, 
+     $     hasmaa, hasqt, hasfqt, hasrqt,
+     $     isfqat, isqat, isljat, ismasv, isdrsp, isdrat, isztat,
+     $     isrl
+      common/attrib/atmass(maxaty),
+     $     nbdmol(maxmty), ndrmol(maxmty), nljmol(maxmty), 
+     $     nmamol(maxmty), nqmol(maxmty), nrlmol(maxmty),
+     $     nfqmol(maxmty), nrqmol(maxmty),
+     $     natmty(maxmty),
+     $     nwaty(maxaty),
+     $     iatype(maxmty,mxatml),
+     $     iljmol(maxmty,mxatml), imamol(maxmty,mxatml),
+     $     irlmol(maxmty,mxatml),
+     $     iqmol(maxmty,mxatml), ifqmol(maxmty,mxatml),
+     $     irqmol(maxmty,mxatml),
+     $     idrmol(maxmty,mxatml/2,2),
+     $     ibdmol(maxmty,mxbdml,2),
+     $     neede,
+     $     hasljt(maxmty), hasbdt(maxmty), hasqt(maxmty),
+     $     hasfqt(maxmty), hasdrd(maxmty),
+     $     hashvy(maxmty), haslt(maxmty),
+     $     hasrqt(maxmty),
+     $     hasmaa(maxatm), 
+     $     isfqat(maxaty), isqat(maxaty), 
+     $     isljat(maxaty), ismasv(maxaty),
+     $     isdrsp(maxaty), isdrat(maxaty), isztat(maxaty),
+     $     isrl(maxaty)
+      common/constr/ncons(maxmty),
+     $     r2cons(maxmty,maxcon), icons(maxmty,maxcon,2)
+      common/cutoff/spline,spldrv
+c$$$      common/debug/ebit(10)
+c$$$      common/debug/qpeter, qpetra
+	common/debug/ebit(10,nmass)
+c$$$      common/debug/nrprE(maxbin, mxrdiv), 
+c$$$     $     ebit(10),
+c$$$     $     nrat1f, nrat2f, nrat1i,
+c$$$     $     nrat2i, dimere(maxmol,maxmol), 
+c$$$     $     rsaved(maxmol, maxmol), qcoul
+      common/dipole/smusq,
+     $     smu(3,nmass)
+      logical dslvfl, dwrong
+      common/drude/ndsolv, ldslv,
+     $     dslvfl, dwrong
+      common/dyn/ndstep, nscbas
+      common/energy/ake, qke, dke, basepe, 
+     $     ape(nmass), qpe(nmass),
+     $     rmonpe(maxmty),
+c$$$     $     bonde(maxmol,nmass), selfe(maxmol, nmass)
+     .     solve(maxmol), sdmre(maxmol),
+     .     coule(maxmol,nmass), rlje(maxmol,nmass), selfe(maxmol,nmass),
+     .     dimere(maxmol,maxmol,nmass)
+cmov     $     selfe(maxmol),
+cmov     $     uqbpre(maxmol,maxmol), qbpre(maxmol,maxmol),
+cmov     $     qepre(maxmol,maxmol),
+cmov     $     nhbond(maxmol),
+      common/erfcst/stpsiz, stpb2, stp2, stp2i, stp22i, erfchi, erfclo,
+     $     erfca(maxerb),
+     $     nerbin
+      logical ewlflg, ewlkfl, ewsrfl
+      common/ewald/ewlkap, ewlkmx, ewlkp2, r2kbrp, srffac,
+     $     rntok(3), 
+     $     rkfac(maxkvc), r1kfac(maxkvc), r2kfac(maxkvc),
+     $     rkvec(maxkvc,3),
+     $     coskx(maxatm,maxk1d+1,3), sinkx(maxatm,maxk1d+1,3),
+     $     eikrre(maxatm,maxkvc), eikrim(maxatm,maxkvc),
+     $     numkvc, nbig, 
+     $     nvec(maxkvc,3),
+     $     ewlflg, ewlkfl, ewsrfl
+      character datdir*80, scrdir*80, filnam*80, 
+     $     stfile*30, syfile*30, qifile*30, 
+     $     suffix*20
+      common/files/suffix, stfile, syfile, qifile, 
+     $     filnam, datdir, scrdir
+      common/solvne/bdercl(nrclbn), bdrssq(nrclbn),
+     $     nbdr(nrclbn)
+      logical aOflag, binflg, bHflag, 
+     $     bdeflg, bOflag, cbnflg,
+     $     ctflag, cubflg, dbflag, dsiter, dsnext,
+     $     eqflag, fsiter,
+     $     ioflg, ioiter, ocflag, pbflag, pliter, 
+     $     qwrong, ratflg
+      common/flags/aOflag, binflg, bHflag,
+     $     bdeflg, bOflag, cbnflg,
+     $     ctflag, cubflg,
+     $     dbflag, dsiter, dsnext, eqflag, fsiter,
+     $     ioflg, ioiter, ocflag,
+     $     pbflag, pliter, qwrong, ratflg
+      common/forces/rnkbv, wvir, wvirnx,
+     $     wvirk, wvirkd,
+     $     wvirlj(3), wvirqt(3), wvirqa(3),
+     $     field(maxatm,3),
+     $     force(maxatm,3,ndist,nmass)
+      logical isfrat
+      common/frame/comcof(maxmty,mxfrat),
+     $     tagcof(maxmty,mxatml,mxfrat),
+     $     nframe(maxmty), ntag(maxmty),
+     $     isfrat(maxaty)
+      common/io/iseed, nioint, nbnint
+      common/ioetc/iabyte, idbyte
+      real*8 Jdat
+      common/Jdata/rvec(numbin),
+     $     Jdat(numbin,maxaty,maxaty), 
+     $     dJdat(numbin,maxaty,maxaty),
+     $     splcj(numbin,4,maxaty,maxaty),
+     $     splcdj(numbin,4,maxaty,maxaty)
+      logical hscstj
+      common/Jmodel/interJ, intraJ, ncint,
+     $     icustj(maxmty,maxmty),
+     $     hscstj
+      logical masmsk
+      common/masks/masmsk(maxaty,nmass)
+      character*30 modnam(maxmty)
+      logical hasmid
+      common/models/qmol(maxmty),
+     $     trmdrd(maxmty,mxatml/2),
+     $     trmbd(maxmty,mxbdml,2),
+     $     trmq(maxaty,2),
+     $     trmj(maxmty,mxatml,mxatml), trmdj(maxmty,mxatml,mxatml),
+     $     trmlj(maxaty,maxaty,11),
+     $     nmty,
+     $     modnam,
+     $     hasmid(maxmid)
+      common/moldep/numatm(maxmol)
+      common/renam0/qhigh(maxaid), qlow(maxaid),
+     $     qhighg(maxaid), qlowg(maxaid)
+      common/renam1/defq(maxaty)
+      common/renam2/qmass, qminv
+      logical qslvfl, qsiter
+      common/qsolve/qans(maxatm), qvec(maxatm),
+     $     qmat(maxatm,maxatm), 
+     $     nqind, nqsolv, lqslv,
+     $     indbig(maxatm), indsml(maxatm), 
+     $     qslvfl, qsiter
+c$$$      common/renamed/qmass, qminv, 
+c$$$     $     qhigh(maxaid), qlow(maxaid), 
+c$$$     $     qhighg(maxaid), qlowg(maxaid),
+c$$$     $     defq(maxaty)
+      common/rarray/rmat(mxatml,mxatml), r2mat(mxatml,mxatml), 
+     $     rinmat(mxatml,mxatml), dxmat(mxatml,mxatml),
+     $     dymat(mxatml,mxatml), dzmat(mxatml,mxatml)
+      common/respa/rspln
+      common/simdat/symass, vol, hbox, fcutr, fcutd, fcutb, hvywt,
+     $     fnearr, fneard,
+     $     boxsiz(3), boxby2(3), Efield(3), 
+     $     nmol, natoms, naty, nfqatm, nfqaty, iplint,
+     $     nmaaty, nmatom, nrlaty, ndatom, nlatom, nhatom
+      logical movlt, movhvy
+      common/state/movlt, movhvy
+      logical moving, first, lclose
+      common/sys/dtbig, dths, dthf, dtl, dtlf,
+     $     rcom(3),
+     $     rminv(maxatm), q(maxatm), qvel(maxatm),
+     $     qforce(maxatm,ndist,nmass),
+     $     chi(maxatm,ndist,nmass),
+     $     pos(maxatm,3), vel(maxatm,3), 
+     $     fldpos(maxatm,3), tmppos(maxatm,3),
+     $     nl, nhf, nlf,
+     $     ident(maxatm), itype(maxatm), molec(maxatm), 
+     $     molid(maxmol), molty(maxmol),
+     $     niters,
+     $     moving, first,
+     $     lclose(maxmol,maxmol)
+      logical frzflg, vscflg, qvscfl
+      common/temps/T, Ttol, qT, qTrang, rketmp, rktsum, rktssq, 
+     $     rcmtmp,
+     $     drudet,
+     $     stint,
+     $     nrdof, nqdof, nmdof, nsceql, mxsceq, nscint, ntstep,
+     $     frzflg, vscflg, qvscfl
+      character rinfo*80
+      common/text/rinfo
+      common/xref/midmty(maxmty),
+     $     ideaty(maxaty), imtaty(maxaty),
+     $     mtymid(maxmid),
+     $     idemty(maxmty,mxatml),
+     $     iatmol(maxmol,mxatml)
+
+

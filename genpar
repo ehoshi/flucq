@@ -1,0 +1,20 @@
+c I/O unit numbers.  tmp units are used only locally.
+      parameter (iuin   = 5)
+      parameter (iuout  = 6)
+      parameter (iutmp  = 7)
+      parameter (iutmp2 = 70)
+      parameter (iutmp3 = 71)
+c How many bytes double-precision, single-precision, and integer variables are.
+      parameter (ndbbyt = 8)
+      parameter (nspbyt = 4)
+      parameter (ninbyt = 4)
+c infinities (note the dependence on 4-byte integers):
+      parameter (bigpos = 1.0d99)
+      parameter (bigneg = -1.0d99)
+      parameter (ibigp = (2 ** (ninbyt * 8 - 2) - 1) * 2 + 1)
+      parameter (ibign = -1 * 2 ** (ninbyt * 8 - 2))
+c numbers:
+      parameter (pi = 3.14159265359)
+c conversion factors:
+      parameter (fr2deg = 180.0d0 / pi)
+      parameter (fdeg2r = 1.0d0 / fr2deg)
