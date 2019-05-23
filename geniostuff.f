@@ -72,13 +72,18 @@ c
 c
       real*4 rbuff(num)
 c
-c      read(iunit, err = 9990, iostat = ioval) rbuff
-      read(iunit, iostat = ioval) rbuff
+      read(iunit, err = 9990, iostat = ioval) rbuff
+c      read(iunit, iostat = ioval) rbuff
       iurdmp = ioval
       return
- 9990 write(iuout, *) 'iurdmp: error reading from unit ', iunit
-      call ioerr(ioval)
-      stop
+
+c     
+ 9990 iurdmp = -1
+      return
+c TODO remove call..., stop and write below
+c 9990 write(iuout, *) 'iurdmp: error reading from unit ', iunit
+c      call ioerr(ioval)
+c      stop
       end
 c
 c***********************************************************************

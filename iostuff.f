@@ -778,12 +778,12 @@ c$$$     $        nitmax = nitmax + nqstep
      $     status = 'new', err = 9990, iostat = ioval)
       write(iudyn) iodynv
       itemp = int((nitmax + 0.1d0) / (maxsiz / idbyte))
-      if (itemp .gt. nioint) then
-         nioint = itemp
-         write(iuout, *) 'ioopen: WARNING! had to set nioint to ',
-     $        nioint, ' to avoid having a dyn.', suffix, 
-     $        ' larger than ', maxsiz, ' bytes'
-      endif
+c      if (itemp .gt. nioint) then
+c         nioint = itemp
+c         write(iuout, *) 'ioopen: WARNING! had to set nioint to ',
+c     $        nioint, ' to avoid having a dyn.', suffix, 
+c     $        ' larger than ', maxsiz, ' bytes'
+c      endif
       itemp = int(nitmax / maxrec) + 1
 c      if (itemp .gt. nioint) then
 c         nioint = itemp

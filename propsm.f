@@ -4,6 +4,8 @@ c     The new version of qdyn does no binning of its own, so props does
 c     all of the binning, collecting of statistics, output formatting,
 c     etc....sjs 3/30/94
 c***********************************************************************
+c
+c     actual simulation time = niters * dtbig
 c     
       include 'implic'      
       include 'genpar'
@@ -1483,6 +1485,8 @@ c***********************************************************************
          endif
 c***********************************************************************
 c     write out traces:
+c just in cause print fails by chainging nsqint in props input, change
+c this if statement
 c***********************************************************************
          if (trcflg .and. niters - iwrite .ge. nsqint) then
             iwrite = niters
@@ -2029,10 +2033,17 @@ c***********************************************************************
       qtstd = sqrt(qtssq / nbinst - qtave ** 2)
       dtstd = sqrt(dtssq / nbinst - dtave ** 2)
       pstd = sqrt(pssq / nbinst - pave ** 2)
+c print simulation time somewhere here so that it can be
+c awk-ed by simplex
+      write(iutmp, '(a,g10.4,a,g9.3,a)') 
+     $     '<time> = ', niters * dtbig, ' +/- ', '0',
+     $     ' fs'
       rmean = apesum / nbinst
       rmnsq = apessq / nbinst
-      stdev = rmnsq - rmean * rmean
-      errbar = sqrt(stdev / (nbinst / stinef))
+      stdev1 = rmnsq - rmean * rmean
+      errbar = sqrt(stdev1 / (nbinst / stinef))
+
+
       write(iutmp, '(a,g10.4,a,g9.3,a)') 
      $     '<PE> = ', rmean * Escale, ' +/- ', errbar * Escale,
      $     ' kcal/mol'
