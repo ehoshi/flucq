@@ -8,31 +8,29 @@ To compile:
    $ tar xvf flucq.tar
    $ cd flucq
    $ mysrcdir=`pwd`
+   $ mkdir build
+   $ cd build
+   $ mybuilddir=`pwd`
 
-   (Setting the $mysrcdir variable is just so that these directions will 
-   make sense if typed as written. You don't have to use it.)
+   (Setting the $mysrcdir and $mybuilddir variables is just so that
+   these directions will make sense if typed as written. You don't
+   have to use them.)
 
-2) Set the MD_ARCH environment variable to the result of "uname -s" on your
-   machine.
-  
-   $ MD_ARCH=`uname -s`
-   $ export MD_ARCH
+2) set the FC environment variable to your preferred fortran compiler:
 
-   Do this in your .bashrc file (or equivalent) if you intend to compile the
-   code on more than a single occasion.
-
-   This variable is used by the makefile.
-
-3) Set the FC environment variable to your preferred fortran compiler:
-
-   $ FC=gfortra
+   $ FC=gfortran
    $ export FC
 
    Do this in your .bashrc file (or equivalent) if you intend to compile the
    code on more than a single occasion.
 
+3) run CMake from the build directory
+
+   $ cd "$mybuilddir"
+   $ cmake -D CMAKE_BUILD_TYPE=Release "$mysrcdir"
+
 4) compile the MD code:
- 
+
    $ make flucq
 
 5) compile the analysis code:
@@ -41,21 +39,22 @@ To compile:
 
 6) copy the input files to a working directory
 
+   $ cd "$mysrcdir"
    $ mydir=~/systems/water   # or wherever you like
-   $ cp models.dat eor.begin stdin.test props.in $mydir
-    
+   $ cp models.dat eor.begin stdin.test props.in "$mydir"
+
 7) run a simulation
    (On palmetto, you will need to do this and the following steps on a
    compute node, not the head node.)
 
-   $ cd $mydir
-   $ $mysrcdir/flucq_$MD_ARCH <stdin.test
+   $ cd "$mydir"
+   $ "$mybuilddir/flucq" <stdin.test
 
-   The $mysrcdir and $MD_ARCH variables are only used here to provide a
-   command that will work without knowing your machine. Feel free to use the
-   actual path and file names.
+   The $mydir and $mybuilddir variables are only used here to provide
+   a command that will work without knowing your machine. Feel free to
+   use the actual path and file names.
 
-   This will run a short, 1 ps simulation of 256 TIP4P water molecules, 
+   This will run a short, 1 ps simulation of 256 TIP4P water molecules,
    and some output should appear on the screen.
    It reads the simulation conditions from standard input (stdin.test in
    this case), the model parameters from models.dat, and the starting
@@ -73,7 +72,7 @@ To compile:
 
 8) analyze the simulation
 
-   $ $mysrcdir/props_$MD_ARCH <props.in
+   $ "$mybuilddir/props" <props.in
 
    This will analyze the simulation results stored in the dyn.test file.
    The specific analyses to be performed are specified on standard input
@@ -84,7 +83,7 @@ To compile:
               averages, so that they can be cumulatively tracked across later
               simulations
    fulle.test contains traces of various system energies
-   gAABB.test is a pair correlation function, g(r), between atom types 
+   gAABB.test is a pair correlation function, g(r), between atom types
               identified by the atomic numbers AA and BB
    press.test contains traces of the system pressure
    props.test contains some simple thermodynamic averages of energy, pressure,
