@@ -7,5 +7,3 @@ FC=gfortran
 export FC
 make flucq
 make props
-cp flucq flucq_Linux
-cp props props_Linux
