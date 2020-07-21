@@ -15,5 +15,7 @@ c    Palmetto max time increased to 144hr
 c    double it for even longer simulation time
 c    takes approximately 240MB for 4 arrays
 c    EM 7/15/20
-      parameter (maxtim = 8000000)
+c    Needs bigger value for maxtim, so double again
+c    should take approximately 480MB for 4 arrays
+      parameter (maxtim = 16000000)
       parameter (maxbas = 1000)
